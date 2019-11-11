@@ -1,7 +1,7 @@
 # MIPS Assignment 2
 .data
 	str: .space 1000
-	message: .asciiz "Input: "
+	message: .asciiz "Input: \n"
 	message1: .asciiz "\nOutput: "
 	message2: .asciiz "\nInvalid input"
 
@@ -21,3 +21,8 @@ main:
 	syscall
 	
 	move $t7, $a0 # moves string into $t7 register
+	
+	# prints str
+	li $v0, 4
+	la $a0, str
+	syscall
