@@ -40,7 +40,12 @@ main:
 	
     lbu $a0, 0($t7) # Loads byte 0 of $t7 (str)
 	
-	
+	# iteration
+    addi $t7, 1 # next char
+	add $t2, $t2, 1 # Adds 1 to $t2 to get the next character
+	sub $t1, $t1, 1 # --10 (1000)
+    
+	j for_loop
 	
 	exit:	
 	# Exit call
