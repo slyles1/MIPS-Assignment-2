@@ -26,3 +26,15 @@ main:
 	li $v0, 4
 	la $a0, str
 	syscall
+	
+	# prints character at index 0
+	li $t1, 10 # initialize register $t1 to 1000
+	li $t2, 0 # initialize byte number to 0
+	
+	
+	
+	
+	exit:	
+	# Exit call
+	li $v0, 0
+	syscall
