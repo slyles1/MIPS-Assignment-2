@@ -35,10 +35,16 @@ main:
 	lw $t9, sum # loads sum into register
 	
 	li $k0, 0 # puts zero in total sum
-	for_loop:
+	
+	
+	for_loop: # to remove leading/trailing spaces and tabs
 	blt $t1, 1, exit # Branch less than 10 < 1 (1000 < 1)
-    lbu $a0, 0($t7) # Loads byte 0 of $t7 (str)
-    j checkNULL
+    lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
+    lbu $t6, 0($t7) # Loads byte 0 of $t7 (str) # storage
+    
+    li $t0, 32
+    beq $t6, $t0, checkTab # character index of string = 32 if t
+
 	
 	return:
 	# iteration
@@ -49,21 +55,12 @@ main:
 	j for_loop
 	
 	
-	
-	
-	checkNULL:
-	
-	j return
-	
-	checkSpace:
-	
-	j return
+
 	
 	checkTab:
 	
 	j return
 	
-	check
 	
 	exit:	
 	# Exit call
