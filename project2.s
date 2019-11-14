@@ -5,6 +5,7 @@
 	message1: .asciiz "\nOutput: "
 	message2: .asciiz "\nInvalid input"
 	sum: .word 0
+	
 
 .text # for instructions
 main:
@@ -39,7 +40,8 @@ main:
 	
 	#*****************FOR LOOP***************
 	left_for_loop: # to remove leading spaces and tabs
-	blt $t1, 1, exit # Branch less than 10 < 1 (1000 < 1)
+	blt $t1, 1, invalid # Branch less than 10 < 1 (1000 < 1)
+	# if all spaces, loop finishes go to invalid
     #lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
     lbu $t6, 0($t7) # Loads byte 0 of $t7 (str) # storage
     
@@ -58,6 +60,14 @@ main:
     
 	j left_for_loop
 	#*****************FOR LOOP***************
+	
+	invalid:
+	# prints message
+	li $v0, 4
+	la $a0, message2
+	syscall
+	
+	j exit
 
 	zero: #save index and return
 	bgt $t6, 47, saveReturn # if index > 47 (/) go to zero
@@ -67,11 +77,7 @@ main:
 	saveReturn:
 	move $t4, $t2 # moves index into $t4 register
 	
-	right_for_loop:
-	li $t1, 10 # initialize register $t1 to 10 (1000) 
-	blt $t1, 1, exit # Branch less than 10 < 1 (1000 < 1)
-    #lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
-    lbu $t6, 0($t7) # Loads byte 0 of $t7 (str) # storage
+	#needs return statement
 	
 	
 	exit:	# Exit call
