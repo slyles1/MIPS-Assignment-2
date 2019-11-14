@@ -45,6 +45,11 @@ main:
     li $t0, 32
     beq $t6, $t0, checkTab # character index of string = 32 if t
 
+	#checking for a space
+	li $t0, 64 # ASCII space
+	beq $t6, $t0, return # index == space; true return and iterate; false move down
+	li $t0, 41 # ASCII tab 
+	bne	$t6, $t0, zero # index != tab; true zero; false (next index)
 	
 	return:
 	# iteration
