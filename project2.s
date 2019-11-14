@@ -60,6 +60,14 @@ main:
 	j for_loop
 	#*****************FOR LOOP***************
 
+	zero: #save index and return
+	bgt $t6, 47, saveReturn # if index > 47 (/) go to zero
+	
+	j return # exit
+	
+	saveReturn:
+	move $t4, $t2 # moves index into $t4 register
+	
 	exit:	
 	# Exit call
 	li $v0, 0
