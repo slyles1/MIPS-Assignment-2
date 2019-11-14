@@ -29,21 +29,20 @@ main:
 	syscall
 	
 	# prints character at index 0
-	li $t1, 10 # initialize register $t1 to 10 (1000)
-	li $t2, 0 # initialize byte number(counter) to 0
+	li $t1, 10 # initialize register $t1 to 10 (1000) 
+	li $t2, 0 # initialize byte number(counter) to 0 (left end)
+	li $t3, 9 # initialize byte number(counter) to 9 (right end)
 	
 	lw $t9, sum # loads sum into register
 	
-	li $k0, 0 # puts zero in total sum
+	li $k0, 0 # puts zero in total sum 
 	
 	#*****************FOR LOOP***************
-	for_loop: # to remove leading spaces and tabs
+	left_for_loop: # to remove leading spaces and tabs
 	blt $t1, 1, exit # Branch less than 10 < 1 (1000 < 1)
     #lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
     lbu $t6, 0($t7) # Loads byte 0 of $t7 (str) # storage
     
-    li $t0, 32
-    beq $t6, $t0, checkTab # character index of string = 32 if t
 
 	#checking for a space
 	li $t0, 64 # ASCII space
@@ -57,18 +56,23 @@ main:
 	add $t2, $t2, 1 # Adds 1 to $t2 to get the next character
 	sub $t1, $t1, 1 # --10 (1000)
     
-	j for_loop
+	j left_for_loop
 	#*****************FOR LOOP***************
 
 	zero: #save index and return
 	bgt $t6, 47, saveReturn # if index > 47 (/) go to zero
 	
-	j return # exit
+	j return 
 	
 	saveReturn:
 	move $t4, $t2 # moves index into $t4 register
 	
-	exit:	
-	# Exit call
+	right_for_loop:
+	blt $t1, 1, exit # Branch less than 10 < 1 (1000 < 1)
+    #lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
+    lbu $t6, 0($t7) # Loads byte 0 of $t7 (str) # storage
+	
+	
+	exit:	# Exit call
 	li $v0, 0
 	syscall
