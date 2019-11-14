@@ -5,6 +5,8 @@
 	message1: .asciiz "\nOutput: "
 	message2: .asciiz "\nInvalid input"
 	sum: .word 0
+	message3: .asciiz "\nIndex saved is "
+	saved_index: .word 0
 	
 
 .text # for instructions
@@ -39,7 +41,7 @@ main:
 	li $k0, 0 # puts zero in total sum 
 	
 	#*****************FOR LOOP***************
-	left_for_loop: # to remove leading spaces and tabs
+	for_loop: # to remove leading spaces and tabs
 	blt $t1, 1, invalid # Branch less than 10 < 1 (1000 < 1)
 	# if all spaces, loop finishes go to invalid
     #lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
@@ -58,17 +60,10 @@ main:
 	add $t2, $t2, 1 # Adds 1 to $t2 to get the next character
 	sub $t1, $t1, 1 # --10 (1000)
     
-	j left_for_loop
+	j for_loop
 	#*****************FOR LOOP***************
 	
-	invalid:
-	# prints message
-	li $v0, 4
-	la $a0, message2
-	syscall
 	
-	j exit
-
 	zero: #save index and return
 	bgt $t6, 47, saveReturn # if index > 47 (/) go to zero
 	
@@ -76,8 +71,34 @@ main:
 	
 	saveReturn:
 	move $t4, $t2 # moves index into $t4 register
+	sw $t4, saved_index # saved_index = $t4
 	
-	#needs return statement
+	
+	# prints message3 "Index saved"
+	li $v0, 4
+	la $a0, message3
+	syscall
+	
+	
+	# prints address index stored
+	li $v0, 1
+	la $a0, saved_index
+	syscall
+	
+	j string_loop
+	#needs j statement
+	
+	invalid:
+	# prints message2 "Invalid input"
+	li $v0, 4
+	la $a0, message2
+	syscall
+	
+	j exit
+	
+	string_loop:
+	
+
 	
 	
 	exit:	# Exit call
