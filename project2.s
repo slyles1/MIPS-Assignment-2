@@ -30,16 +30,16 @@ main:
 	
 	# prints character at index 0
 	li $t1, 10 # initialize register $t1 to 10 (1000)
-	li $t2, 0 # initialize byte number to 0
+	li $t2, 0 # initialize byte number(counter) to 0
 	
 	lw $t9, sum # loads sum into register
 	
 	li $k0, 0 # puts zero in total sum
 	
-	
-	for_loop: # to remove leading/trailing spaces and tabs
+	#*****************FOR LOOP***************
+	for_loop: # to remove leading spaces and tabs
 	blt $t1, 1, exit # Branch less than 10 < 1 (1000 < 1)
-    lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
+    #lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
     lbu $t6, 0($t7) # Loads byte 0 of $t7 (str) # storage
     
     li $t0, 32
@@ -53,15 +53,8 @@ main:
 	sub $t1, $t1, 1 # --10 (1000)
     
 	j for_loop
-	
-	
+	#*****************FOR LOOP***************
 
-	
-	checkTab:
-	
-	j return
-	
-	
 	exit:	
 	# Exit call
 	li $v0, 0
