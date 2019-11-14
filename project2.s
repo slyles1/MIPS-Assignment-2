@@ -7,6 +7,7 @@
 	sum: .word 0
 	message3: .asciiz "\nIndex saved is "
 	saved_index: .word 0
+	test: .asciiz "\nGot to the end of the for loop"
 	
 
 .text # for instructions
@@ -97,9 +98,13 @@ main:
 	j exit
 	
 	string_loop:
+	blt $t1, 1, finished # Branch less than 10 < 1 (1000 < 1)
 	
 
-	
+	finished:
+	li $v0, 4
+	la $a0, test
+	syscall
 	
 	exit:	# Exit call
 	li $v0, 0
