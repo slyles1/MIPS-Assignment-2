@@ -68,6 +68,7 @@ main:
 	move $t4, $t2 # moves index into $t4 register
 	
 	right_for_loop:
+	li $t1, 10 # initialize register $t1 to 10 (1000) 
 	blt $t1, 1, exit # Branch less than 10 < 1 (1000 < 1)
     #lbu $a0, 0($t7) # Loads byte 0 of $t7 (str) # for printing
     lbu $t6, 0($t7) # Loads byte 0 of $t7 (str) # storage
