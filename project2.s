@@ -6,8 +6,10 @@
 	message2: .asciiz "\nInvalid input"
 	sum: .word 0
 	message3: .asciiz "\nIndex saved is "
+	message4: .asciiz ": "
 	saved_index: .word 0
 	test: .asciiz "\nGot to the end of the for loop"
+	newline: .asciiz "\n"
 	
 
 .text # for instructions
@@ -35,7 +37,7 @@ main:
 	# prints character at index 0
 	li $t1, 10 # initialize register $t1 to 10 (1000) 
 	li $t2, 0 # initialize byte number(counter) to 0 (left end)
-	li $t3, 9 # initialize byte number(counter) to 9 (right end)
+	#li $t3, 9 # initialize byte number(counter) to 9 (right end)
 	
 	lw $t9, sum # loads sum into register
 	
@@ -97,8 +99,38 @@ main:
 	
 	j exit
 	
+	#*****************FOR LOOP***************
 	string_loop:
-	blt $t1, 1, finished # Branch less than 10 < 1 (1000 < 1)
+	li $t1, 10 # initialize register $t1 to 10 (1000) 
+	blt $t1, $t4, finished # Branch less than 10 < $t4 (1000 < $t4)
+	
+	# prints int of counter
+	li $v0, 1
+	add $a0, $zero, $t2
+	syscall
+	
+	# prints message3 (": ")
+	li $v0, 4
+	la $a0, message4
+	syscall
+
+	lbu $t6, saved_index($t7) # Loads byte saved_index of $t7 (str)
+    lbu $a0, saved_index($t7) # Loads byte saved_index of $t7 (str)
+    li $v0, 11 # prints character
+    syscall
+	
+	# prints newline
+	li $v0, 4
+	la $a0, newline
+	syscall
+	
+	# iteration
+    addi $t7, 1 # next char
+	add $t2, $t2, 1 # Adds 1 to $t2 to get the next character
+	sub $t1, $t1, 1 # --10 (1000)
+	
+	j string_loop
+	#*****************END FOR LOOP***************
 	
 
 	finished:
